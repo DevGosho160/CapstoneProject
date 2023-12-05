@@ -5,10 +5,12 @@ import errors from './errors';
 import auth from './auth';
 import messages from './messages';
 import tasks from './tasks';
+import discussion from './discussion';
 
 export default combineReducers({
 	errors,
 	auth,
 	messages,
-	tasks
+	tasks,
+	discussion,
 });
