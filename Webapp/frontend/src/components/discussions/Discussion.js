@@ -1,16 +1,29 @@
 import React, { Component , Fragment } from 'react';
+import propTypes from 'prop-types';
 import { sendMessage } from '../../actions/discussion';
+import { connect } from 'react-redux';
+
+
 export class Discussion extends Component {
+    constructor(props, di){
+        super(props);
+        discussion = di;
+    }
+    
     state = {
-        id: 1,
         message: '',
     };
+
+    static Proptypes = {
+        sendMessage: propTypes.func.isRequired,
+        discussion: propTypes.number.isRequired,
+    }
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
     onSubmit = (e) => {
         e.preventDefault()
-        this.props.sendMessage(this.state, id);
+        this.props.sendMessage(this.state, discussion);
     };
     render(){
         return(
@@ -31,4 +44,7 @@ export class Discussion extends Component {
     };
 };
 
-export default Discussion;
+const mapStateToProps = (state) => {
+    msg: state.message
+}
+export default connect(mapStateToProps, { sendMessage })(Discussion)

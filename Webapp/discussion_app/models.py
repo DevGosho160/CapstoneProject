@@ -7,7 +7,7 @@ class Discussion(models.Model):#title-discussion title, created_at/last_message-
     title = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     last_message = models.DateTimeField(null=True, auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=1)
 
     def __str__(self):
         return self.title

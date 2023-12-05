@@ -6,7 +6,7 @@ import { CREATE_DISCUSSIONUSER, DISCUSSION_MAIN, GET_DISCUSSION, CREATE_DISCUSSI
 
 export const loadDiscussion = (di) => (dispatch, getState) => {
     axios
-        .get(`/api/${di}/`, tokenConfig(getState))
+        .get(`discussion/api/message`, tokenConfig(getState))
         .then((res) => {
             dispatch({
                 type: GET_DISCUSSION,
@@ -17,8 +17,14 @@ export const loadDiscussion = (di) => (dispatch, getState) => {
 };
 
 export const createDiscussion = (discussion) => (dispatch, getState) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    
     axios
-        .post(`api/newdiscussion/`, discussion, tokenConfig(getState))
+        .post('discussion/api/newdiscussion/', discussion, config)
         .then((res) => {
             dispatch({
                 type: CREATE_DISCUSSION,
@@ -29,8 +35,14 @@ export const createDiscussion = (discussion) => (dispatch, getState) => {
 };
 
 export const sendMessage = (message, di) => (dispatch, getState) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    
     axios
-        .post(`api/${di}`, message, tokenConfig(getState))
+        .post(`discussion/api/message/`, message, config)
         .then((res) => {
             dispatch({
                 type: POST_SENT,
@@ -42,7 +54,7 @@ export const sendMessage = (message, di) => (dispatch, getState) => {
 
 export const getDiscussions = () => (dispatch, getState) => {
     axios
-        .get('api/', tokenConfig(getState))
+        .get('discussion/api/discussion/', tokenConfig(getState))
         .then((res) => {
             dispatch({
                 type: DISCUSSION_MAIN,
@@ -53,8 +65,14 @@ export const getDiscussions = () => (dispatch, getState) => {
 };
 
 export const addParticipants = (dus) => (dispatch, getState) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    
     axios
-            .post('api/discussionuser', dus, tokenConfig(getState))
+            .post('discussion/api/discussionuser/', dus, config)
             .then((res) => {
                 dispatch({
                     type: CREATE_DISCUSSIONUSER,

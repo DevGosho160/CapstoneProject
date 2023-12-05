@@ -16,6 +16,7 @@ class DiscussionMainAPI(generics.GenericAPIView):
         discussionIDs = discussionUsers.values_list('discussion', flat=True)
         discuss = Discussion.objects.filter(id__in=discussionIDs)
         serializer = self.get_serializer(discuss, many=True)
+        print("finished get")
         return Response(serializer.data)
 
 class MessagingAPI(generics.GenericAPIView):
@@ -41,7 +42,7 @@ class NewDiscussionAPI(generics.GenericAPIView):
     ]
     serializer_class = DiscussionSerializer
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer({})
+        serializer = self.get_serializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         discuss = serializer.save()
         return Response({"discuss" : DiscussionSerializer(discuss, self.get_serializer_context()).data})
@@ -52,8 +53,10 @@ class NewDiscussionUserAPI(generics.GenericAPIView):
     ]
     serializer_class = DiscussionUserSerializer
     def post(self, request, *args, **kwargs):
+        discussion_users = []
         for datum in request.data:
             serializer = self.get_serializer(data = datum)
             serializer.is_valid(raise_exception = True)
             du = serializer.save()
-        return Response({"DiscussionUser" : DiscussionUserSerializer(du, self.get_serializer_context()).data})
+            discussion_users.append(du)
+        return Response({"DiscussionUser" : DiscussionUserSerializer(discussion_users, many=True, context=self.get_serializer_context()).data})

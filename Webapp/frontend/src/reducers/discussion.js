@@ -1,4 +1,5 @@
 import { GET_DISCUSSION, CREATE_DISCUSSION, POST_SENT} from '../actions/discussion';
+import { DISCUSSION_MAIN } from '../actions/types';
 
 const initialState = {
     msgs: [],
@@ -26,7 +27,11 @@ export default function (state = initialState, action) {
                 ...state,
                 du: [...state.du, action.payload]
             }
-        default:
+        case DISCUSSION_MAIN:
+            return {
+                ...state,
+                msgs: action.payload,
+            }
             return {
                 ...state,
             }
