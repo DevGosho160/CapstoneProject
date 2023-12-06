@@ -6,7 +6,7 @@ import { CREATE_DISCUSSIONUSER, DISCUSSION_MAIN, GET_DISCUSSION, CREATE_DISCUSSI
 
 export const loadDiscussion = (di) => (dispatch, getState) => {
     axios
-        .get(`discussion/api/message`, tokenConfig(getState))
+        .get(`discussion/api/message`, di, tokenConfig(getState))
         .then((res) => {
             dispatch({
                 type: GET_DISCUSSION,

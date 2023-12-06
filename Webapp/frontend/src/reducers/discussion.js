@@ -1,8 +1,9 @@
-import { GET_DISCUSSION, CREATE_DISCUSSION, POST_SENT} from '../actions/discussion';
-import { DISCUSSION_MAIN } from '../actions/types';
+import { GET_DISCUSSION, CREATE_DISCUSSION, POST_SENT} from '../actions/types';
+import { DISCUSSION_MAIN, CREATE_DISCUSSIONUSER } from '../actions/types';
 
 const initialState = {
     msgs: [],
+    du: [],
 }
 
 export default function (state = initialState, action) {
@@ -32,8 +33,9 @@ export default function (state = initialState, action) {
                 ...state,
                 msgs: action.payload,
             }
+        default:
             return {
-                ...state,
+                state,
             }
     }
 }
