@@ -30,9 +30,12 @@ class DiscussionMain extends Component {
         return (
             <div className='col'>
                 {this.renderDiscussions()}
-                <Link to='/NewDiscussion'>
+<button className="btn btn-primary" type="button">New Discussion</button>
+                <div className="mb-3">
+                    <label className="form-label">Discussion Title</label>
+                    <input className="form-control" id="title" aria-describedby="emailHelp" autoComplete="title" name='title' onChange={this.onChange}/>
                     <button className="btn btn-primary" type="button">New Discussion</button>
-                </Link>
+                </div>
             </div>
         );
     }

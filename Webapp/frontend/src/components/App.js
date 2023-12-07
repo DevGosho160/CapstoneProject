@@ -77,11 +77,6 @@ class App extends Component{
                                             <DiscussionMain/>
                                         </PrivateRoute>
                                     }/>
-                                    <Route exact path ="/newDiscussion" element= {
-                                        <PrivateRoute>
-                                            <NewDiscussion/>
-                                        </PrivateRoute>
-                                    }/>
                                     <Route exact path ="/message" element= {
                                         <PrivateRoute>
                                             <Discussion/>
