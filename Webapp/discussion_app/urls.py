@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .api import DiscussionMainAPI, MessagingAPI, NewDiscussionAPI, NewDiscussionUserAPI
+from .api import DiscussionMainAPI, MessagingAPI, NewDiscussionAPI
 
 urlpatterns = [
     path('api/discussion/', DiscussionMainAPI.as_view()),

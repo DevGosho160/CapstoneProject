@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Discussion, Message, DiscussionUser
+from .models import Discussion, Message
 from django.contrib.auth.models import User
 
 #Serializer for Discussions

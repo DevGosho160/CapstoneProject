@@ -1,5 +1,5 @@
-from .models import Discussion, Message, DiscussionUser
-from .serializers import DiscussionSerializer, DiscussionUserSerializer, MessageSerializer
+from .models import Discussion, Message #DiscussionUser
+from .serializers import DiscussionSerializer, MessageSerializer
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from django.contrib.auth.models import User
