@@ -16,7 +16,7 @@ class DiscussionMain extends Component {
         }
 
         return discussions.map((discussion) => (
-            <Link key={discussion.id} to={`/discussion/${discussion.id}`}>
+            <Link key={discussion.title} to={`/message`}>
                 <div className="alert alert-light" role="alert">
                     {discussion.title}
                     <small className="text-muted">Last Post: {discussion.last_message}</small>
@@ -30,12 +30,11 @@ class DiscussionMain extends Component {
         return (
             <div className='col'>
                 {this.renderDiscussions()}
-<button className="btn btn-primary" type="button">New Discussion</button>
-                <div className="mb-3">
+                <form className="mb-3" onSubmit={newDiscussion}>
                     <label className="form-label">Discussion Title</label>
-                    <input className="form-control" id="title" aria-describedby="emailHelp" autoComplete="title" name='title' onChange={this.onChange}/>
-                    <button className="btn btn-primary" type="button">New Discussion</button>
-                </div>
+                    <input className="form-control" id="title" autoComplete="title" name='title' type='text' onChange={this.onChange}/>
+                    <button className="btn btn-primary" type="submit">New Discussion</button>
+                </form>
             </div>
         );
     }

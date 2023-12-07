@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class DiscussionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discussion
-        fields = ['id', 'title', 'created_at', 'last_message']
+        fields = ['__all__']
 
 #Serializer for Messages
 class MessageSerializer(serializers.ModelSerializer):
@@ -14,11 +14,12 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ['id', 'discussion', 'user', 'post_content', 'post_date']
+        fields = ['__all__']
+
 #Serializes the connection between users and discussions
-class DiscussionUserSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    
-    class Meta:
-        model = DiscussionUser
-        fields = ['id', 'discussion', 'user']
+#class DiscussionUserSerializer(serializers.ModelSerializer):
+#    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+#    
+#    class Meta:
+#        model = DiscussionUser
+#        fields = ['__all__']

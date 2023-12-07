@@ -12,9 +12,7 @@ class DiscussionMainAPI(generics.GenericAPIView):
     queryset = Discussion.objects.all()
     serializer_class = DiscussionSerializer
     def get(self, request):
-        discussionUsers = DiscussionUser.objects.filter(user = request.user.id)
-        discussionIDs = discussionUsers.values_list('discussion', flat=True)
-        discuss = Discussion.objects.filter(id__in=discussionIDs)
+        discuss = Discussion.objects.all()
         serializer = self.get_serializer(discuss, many=True)
         print("finished get")
         return Response(serializer.data)
@@ -47,16 +45,16 @@ class NewDiscussionAPI(generics.GenericAPIView):
         discuss = serializer.save()
         return Response({"discuss" : DiscussionSerializer(discuss, self.get_serializer_context()).data})
     
-class NewDiscussionUserAPI(generics.GenericAPIView):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-    serializer_class = DiscussionUserSerializer
-    def post(self, request, *args, **kwargs):
-        discussion_users = []
-        for datum in request.data:
-            serializer = self.get_serializer(data = datum)
-            serializer.is_valid(raise_exception = True)
-            du = serializer.save()
-            discussion_users.append(du)
-        return Response({"DiscussionUser" : DiscussionUserSerializer(discussion_users, many=True, context=self.get_serializer_context()).data})
+#class NewDiscussionUserAPI(generics.GenericAPIView):
+#    permission_classes = [
+#        permissions.IsAuthenticated,
+#    ]
+#    serializer_class = DiscussionUserSerializer
+#    def post(self, request, *args, **kwargs):
+#        discussion_users = []
+#        for datum in request.data:
+#            serializer = self.get_serializer(data = datum)
+#            serializer.is_valid(raise_exception = True)
+#            du = serializer.save()
+#            discussion_users.append(du)
+#        return Response({"DiscussionUser" : DiscussionUserSerializer(discussion_users, many=True, context=self.get_serializer_context()).data})
