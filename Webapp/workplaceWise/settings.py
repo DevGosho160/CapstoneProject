@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'calendar_app',
     'discussion_app',
     'performance_app',
+    'message_app',
     
     
 ]
