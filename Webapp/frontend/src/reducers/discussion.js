@@ -1,7 +1,8 @@
-import { GET_MESSAGES, SEND_MESSAGE } from "../actions/types";
+import { CREATE_DISCUSSION, GET_DISCUSSIONS, GET_MESSAGES, SEND_MESSAGE } from "../actions/types";
 
 const initialState = {
     messages: [],
+    discussions: [],
 }
 
 export default function (state = initialState, action) {
@@ -16,6 +17,16 @@ export default function (state = initialState, action) {
                 ...state,
                 messages: [...state.messages, action.payload],
             };
+        case GET_DISCUSSIONS:
+            return {
+                ...state,
+                discussions: action.payload
+            }
+        case CREATE_DISCUSSION:
+            return {
+                ...state,
+                discussions: [...state.discussions, action.payload],
+            }
         default:
             return state;
     }

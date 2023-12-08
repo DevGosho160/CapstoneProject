@@ -15,6 +15,7 @@ import Calendar from './calendar/Calendar';
 import Profile from './profile/Profile';
 
 import DiscussionMain from './discussions/DiscussionMain';
+import Discussions from './discussions/Discussions';
 
 import { Provider } from 'react-redux';
 import store from "../store";
@@ -72,8 +73,11 @@ class App extends Component{
                                     }/>
                                     <Route exact path ="/discussion" element= {
                                         <PrivateRoute>
-                                            <DiscussionMain/>
+                                            <Discussions/>
                                         </PrivateRoute>
+                                    }/>
+                                    <Route exact path ="/message" element= {
+                                        <DiscussionMain/>
                                     }/>
                                     <Route exact path ="/register"element={
                                         <Register/>

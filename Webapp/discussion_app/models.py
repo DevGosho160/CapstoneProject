@@ -9,4 +9,4 @@ class Message(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     message = models.TextField(max_length=300, blank=True)
-    #discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=True)
+    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, null=True)

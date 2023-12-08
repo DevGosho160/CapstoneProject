@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getMessages, sendMessage } from '../../actions/discussion';
 
