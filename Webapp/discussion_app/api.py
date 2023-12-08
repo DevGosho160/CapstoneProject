@@ -1,60 +1,21 @@
-from .models import Discussion, Message #DiscussionUser
-from .serializers import DiscussionSerializer, MessageSerializer
-from rest_framework import viewsets, generics, permissions
+from rest_framework import viewsets, permissions
+from .serializers import MessageSerializer
+from .models import Message
 from rest_framework.response import Response
-from django.contrib.auth.models import User
+from rest_framework import status
 
-class DiscussionMainAPI(generics.GenericAPIView):
-    print("Reached Backend")
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-    queryset = Discussion.objects.all()
-    serializer_class = DiscussionSerializer
-    def get(self, request):
-        discuss = Discussion.objects.all()
-        serializer = self.get_serializer(discuss, many=True)
-        print("finished get")
-        return Response(serializer.data)
-
-class MessagingAPI(generics.GenericAPIView):
+class MessageApi(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
-    def get(self, request, di):
-        messages = Message.objects.filter(discussion = di)
-        serializer = self.get_serializer(messages, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
-        msg = serializer.save()
-        return Response({"message" : MessageSerializer(msg, self.get_serializer_context()).data})
-
-class NewDiscussionAPI(generics.GenericAPIView):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-    serializer_class = DiscussionSerializer
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
-        discuss = serializer.save()
-        return Response({"discuss" : DiscussionSerializer(discuss, self.get_serializer_context()).data})
     
-#class NewDiscussionUserAPI(generics.GenericAPIView):
-#    permission_classes = [
-#        permissions.IsAuthenticated,
-#    ]
-#    serializer_class = DiscussionUserSerializer
-#    def post(self, request, *args, **kwargs):
-#        discussion_users = []
-#        for datum in request.data:
-#            serializer = self.get_serializer(data = datum)
-#            serializer.is_valid(raise_exception = True)
-#            du = serializer.save()
-#            discussion_users.append(du)
-#        return Response({"DiscussionUser" : DiscussionUserSerializer(discussion_users, many=True, context=self.get_serializer_context()).data})
+    def send_message(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['created_by'] = request.user.id
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

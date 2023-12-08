@@ -1,41 +1,22 @@
-import { GET_DISCUSSION, CREATE_DISCUSSION, POST_SENT} from '../actions/types';
-import { DISCUSSION_MAIN, CREATE_DISCUSSIONUSER } from '../actions/types';
+import { GET_MESSAGES, SEND_MESSAGE } from "../actions/types";
 
 const initialState = {
-    msgs: [],
-    du: [],
+    messages: [],
 }
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case GET_DISCUSSION:
+        case GET_MESSAGES:
             return {
                 ...state,
-                msgs: action.payload,
-            }
-        case CREATE_DISCUSSION:
-            return{
-                ...state,
-                msgs: action.payload,
-            }
-        case POST_SENT:
+                messages: action.payload
+            };
+        case SEND_MESSAGE:
             return {
                 ...state,
-                msgs: [...state.msgs, action.payload],
-            }
-        case CREATE_DISCUSSIONUSER:
-            return {
-                ...state,
-                du: [...state.du, action.payload]
-            }
-        case DISCUSSION_MAIN:
-            return {
-                ...state,
-                msgs: action.payload,
-            }
+                messages: [...state.messages, action.payload],
+            };
         default:
-            return {
-                state,
-            }
+            return state;
     }
 }

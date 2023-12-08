@@ -1,9 +1,8 @@
-from django.urls import path, include
-from .api import DiscussionMainAPI, MessagingAPI, NewDiscussionAPI
+from rest_framework import routers
+from .api import MessageApi
 
-urlpatterns = [
-    path('api/discussion/', DiscussionMainAPI.as_view()),
-    path('api/discussion/<int:id>', MessagingAPI.as_view()),
-    path('api/newdiscussion/', NewDiscussionAPI.as_view()),
-    #path('api/discussionuser/', NewDiscussionUserAPI.as_view()),
-]
+router = routers.DefaultRouter()
+router.register('api/message', MessageApi, 'messages')
+
+
+urlpatterns = router.urls

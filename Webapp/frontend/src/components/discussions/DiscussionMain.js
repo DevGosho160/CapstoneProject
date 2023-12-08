@@ -1,48 +1,79 @@
-import React, { Component, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getDiscussions } from '../../actions/discussion';
+import PropTypes from 'prop-types';
+import { getMessages, sendMessage } from '../../actions/discussion';
 
-class DiscussionMain extends Component {
-    componentDidMount(){
-        this.props.getDiscussions;
-    }
-    renderDiscussions() {
+export class DiscussionMain extends Component {
+  state = {
+    msg: '',
+  };
 
-        const { discussions } = this.props;
+  static propTypes = {
+    messages: PropTypes.array.isRequired,
+    getMessages: PropTypes.func.isRequired,
+    sendMessage: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+  };
 
-        if (!discussions) {
-            return null;
-        }
+  componentDidMount() {
+    this.props.getMessages();
+  }
 
-        return discussions.map((discussion) => (
-            <Link key={discussion.title} to={`/message`}>
-                <div className="alert alert-light" role="alert">
-                    {discussion.title}
-                    <small className="text-muted">Last Post: {discussion.last_message}</small>
-                    <small>Created: {discussion.created_at}</small>
-                </div>
-            </Link>
-        ));
-    }
+  onChange = (e) => this.setState({ msg: e.target.value });
 
-    render() {
-        return (
-            <div className='col'>
-                {this.renderDiscussions()}
-                <form className="mb-3" onSubmit={newDiscussion}>
-                    <label className="form-label">Discussion Title</label>
-                    <input className="form-control" id="title" autoComplete="title" name='title' type='text' onChange={this.onChange}/>
-                    <button className="btn btn-primary" type="submit">New Discussion</button>
-                </form>
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { msg } = this.state;
+    console.log('Message content:', msg)
+    const message = { message: msg };
+    this.props.sendMessage(message);
+    this.setState({
+      msg: '',
+    });
+  };
+
+  render() {
+    const { messages } = this.props;
+    const { msg } = this.state;
+
+    return (
+      <div className="col">
+        <form className="input-group mb-3" onSubmit={this.onSubmit}>
+          <input
+            type="text"
+            className="form-control"
+            aria-describedby="button-addon2"
+            onChange={this.onChange}
+          />
+          <button
+            className="btn btn-outline-secondary"
+            type="submit"
+            id="button-addon2"
+          >
+            Send
+          </button>
+        </form>
+        {messages.reverse().map((message) => (
+          <div key={message.id} className="alert alert-light" role="alert">
+            <div>
+                {message.message}
             </div>
-        );
-    }
+            <small className="text-muted">
+              Posted: {message.created_at} by @{message.created_by}
+            </small>
+          </div>
+        ))}
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
-    discussions: state.discussions ? state.discussions.msgs || [] : [],
+  auth: state.auth,
+  messages: state.discussion.messages,
 });
 
-export default connect(mapStateToProps, { getDiscussions })(DiscussionMain);
-
+export default connect(mapStateToProps, {
+  getMessages,
+  sendMessage,
+})(DiscussionMain);

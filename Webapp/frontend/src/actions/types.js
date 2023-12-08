@@ -8,7 +8,6 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 
 // Registration
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_FAIL = 'REGISTER_FAIL';
 
 // Messages
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
@@ -25,8 +24,7 @@ export const DELETE_TASK = 'DELETE_TASK';
 export const UPDATE_COMPLETION = 'UPDATE_COMPLETION';
 
 //Discussion
-export const GET_DISCUSSION = 'GET_DISCUSSION';
+export const GET_MESSAGES = 'GET_MESSAGES';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const GET_DISCUSSIONS = 'GET_DISCUSSIONS';
 export const CREATE_DISCUSSION = 'CREATE_DISCUSSION';
-export const POST_SENT = 'POST_SENT';
-export const CREATE_DISCUSSIONUSER = 'CREATE_DISCUSSIONUSER';
-export const DISCUSSION_MAIN = 'DISCUSSION_MAIN'
